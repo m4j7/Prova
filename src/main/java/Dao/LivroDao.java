@@ -86,15 +86,15 @@ public class LivroDao {
                 livro.setIdDoLivro(resultSet.getInt("idLivro"));
                 livro.setNomeDoLivro(resultSet.getString("nome"));
 
-                Biblioteca B = new Biblioteca();
-                BibliotecaDao bd = new BibliotecaDao();
-                bd.SelecionaId(resultSet.getInt("idBibliotecaFK"));
-                livro.setBibliotecaDoLivro(B);
-
                 GeneroDao gd = new GeneroDao();
                 Genero genero = new Genero();
                 genero = gd.SelecionaId(resultSet.getInt("idGeneroFK"));
                 livro.setGeneroDoLivro(genero);
+
+                BibliotecaDao bd = new BibliotecaDao();
+                Biblioteca biblioteca = new Biblioteca();
+                biblioteca = bd.SelecionaId(resultSet.getInt("idBibliotecaFK"));
+                livro.setBibliotecaDoLivro(biblioteca);
 
                 list.add(livro);
             }
@@ -126,10 +126,10 @@ public class LivroDao {
                     livro.setIdDoLivro(resultSet.getInt("idLivro"));
                     livro.setNomeDoLivro(resultSet.getString("nome"));
 
-                    Biblioteca B = new Biblioteca();
                     BibliotecaDao bd = new BibliotecaDao();
-                    bd.SelecionaId(resultSet.getInt("idBibliotecaFK"));
-                    livro.setBibliotecaDoLivro(B);
+                    Biblioteca biblioteca = new Biblioteca();
+                    biblioteca = bd.SelecionaId(resultSet.getInt("idBibliotecaFK"));
+                    livro.setBibliotecaDoLivro(biblioteca);
 
                     GeneroDao gd = new GeneroDao();
                     Genero genero = new Genero();
@@ -146,6 +146,48 @@ public class LivroDao {
             }
 
         }
+
+    public List<Livro> SelecionaTipo ( int id){
+
+        String sql = "SELECT * FROM livros WHERE idLivro = ?";
+
+        try {
+
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            ResultSet resultSet = stmt.executeQuery();
+
+            List<Livro> list = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Livro livro = new Livro();
+                livro.setIdDoLivro(resultSet.getInt("idLivro"));
+                livro.setNomeDoLivro(resultSet.getString("nome"));
+
+                BibliotecaDao bd = new BibliotecaDao();
+                Biblioteca biblioteca = new Biblioteca();
+                biblioteca = bd.SelecionaId(resultSet.getInt("idBibliotecaFK"));
+                livro.setBibliotecaDoLivro(biblioteca);
+
+                GeneroDao gd = new GeneroDao();
+                Genero genero = new Genero();
+                genero = gd.SelecionaId(resultSet.getInt("idGeneroFK"));
+                livro.setGeneroDoLivro(genero);
+
+                list.add(livro);
+
+            }
+
+            return list;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
 
 
     }

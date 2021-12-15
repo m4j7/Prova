@@ -31,6 +31,11 @@ public class LivroController {
         return ld.SelecionaTipoBiblioteca(id);
     }
 
+    public List<Livro> seleionaById(int id){
+        LivroDao ld = new LivroDao();
+        return ld.SelecionaTipo(id);
+    }
+
 
 
 

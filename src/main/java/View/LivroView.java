@@ -76,4 +76,23 @@ public class LivroView {
         return list;
     }
 
+    public List<Livro> retornaId() {
+
+        Scanner entrada = new Scanner(System.in).useDelimiter("\n");
+        List<Livro> list = new ArrayList<>();
+        Livro livro = new Livro();
+
+        LivroController lc = new LivroController();
+
+        System.out.println("Qual livro você deseja visualizar:");
+
+        list = lc.seleionaById(entrada.nextInt());
+
+        System.out.println("o livro selecionada foi:");
+
+        System.out.println(list);
+
+        return list;
+    }
+
 }

@@ -3,8 +3,11 @@ package Dao;
 import Factory.ConectionFactory;
 import Model.Biblioteca;
 import Model.Genero;
+import Model.Livro;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GeneroDao {
 
